@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WallService.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ex_2-2-1</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">WallService.kt</span></div><h1>WallService.kt</h1><pre class="source lang-java linenums">import post.Likes
+import post.Post
+import java.time.Instant
+
+private var wallId : Int = 0
+
+<span class="fc" id="L7">class WallService {</span>
+<span class="fc" id="L8">    init {</span>
+<span class="fc" id="L9">        wallId += 1</span>
+<span class="fc" id="L10">    }</span>
+<span class="fc" id="L11">    private var storage = emptyArray&lt;Post&gt;()</span>
+    private var postId : Int = 0
+<span class="fc" id="L13">    private var id = wallId</span>
+
+    fun add(post: Post): Post {
+<span class="fc" id="L16">        postId += 1</span>
+<span class="fc" id="L17">        val publishingPost = post.copy(</span>
+<span class="fc" id="L18">            id = postId,</span>
+<span class="fc" id="L19">            date = Instant.now().epochSecond.toInt(),</span>
+<span class="fc" id="L20">            ownerId = id</span>
+        )
+<span class="fc" id="L22">        storage += publishingPost</span>
+<span class="fc" id="L23">        return storage.last()</span>
+    }
+
+    fun update(post: Post): Boolean {
+<span class="pc bpc" id="L27" title="1 of 4 branches missed.">        if (post.ownerId != wallId || post.id &gt; storage.size) return false</span>
+<span class="fc" id="L28">        storage[post.id - 1] = post.copy()</span>
+<span class="fc" id="L29">        return true</span>
+    }
+
+    fun like(post: Post) {
+<span class="nc" id="L33">        val likes = Likes(count = post.likes.count + 1)</span>
+<span class="nc" id="L34">        update(post.copy(likes = likes))</span>
+<span class="nc" id="L35">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
