@@ -20,15 +20,15 @@ data class Post(
     val isPinned : Boolean = false,
     val markedAsAds : Boolean = false,
     val isFavorite : Boolean = false,
-    val postponedId : Int = 0
+    val postponedId : Int = 0,
+    val attachments : Array<Attachment> = emptyArray()
 ) {
 
     val createdBy : Int? = null
     val replyOwnerId : Int? = null
     val replyPostId : Int? = null
-    val comments : Comments? = null
     val copyright : Copyright? = null
-    val donut : Donut? = null
+    val donut : PostDonat? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
